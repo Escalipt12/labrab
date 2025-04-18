@@ -1,1 +1,28 @@
+#include <stdio.h>
+#include <math.h>
 
+double perimeter(double a, double b, double c) {
+    return a + b + c;
+}
+
+double area(double a, double b, double c) {
+    double p = (a + b + c) / 2;
+    return sqrt(p * (p - a) * (p - b) * (p - c));
+}
+
+int main() {
+    double a, b, c;
+    
+    printf("Введите стороны треугольника: ");
+    scanf("%lf %lf %lf", &a, &b, &c);
+    
+    if (a <= 0 || b <= 0 || c <= 0 || a + b <= c || b + c <= a || a + c <= b) {
+        printf("Некорректный треугольник!\n");
+        return 1;
+    }
+    
+    printf("Периметр: %.2f\n", perimeter(a, b, c));
+    printf("Площадь: %.2f\n", area(a, b, c));
+    
+    return 0;
+}
