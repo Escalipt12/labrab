@@ -1,24 +1,14 @@
 #include <stdio.h>
-#include <string.h>
 
 int main() {
-    char str[81]; // Массив для строки (до 80 символов + '\0')
+    char str[81];
     
-
     printf("Введите строку (до 80 символов):\n");
-    fgets(str, sizeof(str), stdin);
-
-    if (str[strlen(str) - 1] == '\n') {
-        str[strlen(str) - 1] = '\0';
-    }
+    scanf("%80[^\n]", str); // Ввод строки до 80 символов, кроме '\n'
     
-
     for (int i = 0; str[i] != '\0'; i++) {
-        if (str[i] == 'a') {
-            str[i] = 'A';
-        } else if (str[i] == 'b') {
-            str[i] = 'B';
-        }
+        if (str[i] == 'a') str[i] = 'A';
+        if (str[i] == 'b') str[i] = 'B';
     }
     
     printf("Полученная строка:\n%s\n", str);
