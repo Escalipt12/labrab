@@ -1,2 +1,54 @@
-выаоыволавплвапавпвапвапвап 
-fdjsfsjdfsjdfsd'fsdjf'sfofdfsf
+#include <stdio.h>
+
+
+int main() {
+    
+    double  array1[3][3]; 
+    double diag = 0.0 ,  diag1 = 0.0;
+    
+    printf("Введите элементы массива 3x3 (double):");
+    for (int i=0 ; i < 3  ; i++){
+        for  (int j= 0 ; j < 3 ; j++){
+            scanf( &array1[i][j]);
+        }
+    }
+    
+    for (int i = 0 ; i < 3 ; i++){
+        diag += array1[i][i];
+        diag1 += array1[i][2 - i];
+        
+        
+    }
+    
+    printf("Сумма элементов главной диагонали" , diag);
+    printf("Сумма элементов побочной диагонали" , diag);
+    
+    
+    int array2[2][2] , result[2][2];
+    printf("\nВведите элементы массива 2x2 (int):");
+    for (int i = 0 ; i < 2 ; i++){
+        for (int j = 0 ; j < 2 ; j++){
+            scanf(&array2[i][j])
+    }
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            result[i][j] = 0;
+            for (int k = 0; k < 2; k++) {
+                result[i][j] += arr2[i][k] * arr2[k][j];
+            }
+        }
+    }
+    
+    printf("Квадрат матрицы 2x2:");
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            printf("%d ", result[i][j]);
+        }
+    }
+    
+    
+    
+    return 0 ;
+
+    
+}
