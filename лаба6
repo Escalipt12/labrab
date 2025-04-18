@@ -1,1 +1,34 @@
+#include <stdio.h>
 
+int main() {
+
+    FILE *source = fopen("people.txt", "w");
+    fprintf(source, "Иванов Петр Сергеевич 1975\n");
+    fprintf(source, "Сидоров Николай Андреевич 1981\n");
+    fprintf(source, "Воробьянинов Ипполит Матвеевич 1978\n");
+    fclose(source);
+    
+
+    source = fopen("people.txt", "r");
+    FILE *target = fopen("filtered_people.txt", "w");
+    
+
+    char line[100];
+    int year;
+    
+
+    while (fgets(line, 100, source)) {
+        sscanf(line, "%*s %*s %*s %d", &year);
+        if (year > 1980) {
+            fputs(line, target);
+        }
+    }
+    
+
+    fclose(source);
+    fclose(target);
+    
+    printf("Готово! Результат в filtered_people.txt\n");
+    
+    return 0;
+}
