@@ -13,5 +13,6 @@ int main() {
 	}
 	fclose(in);
 	fclose(out);
+	printf("complete\n");
 	return 0;
 }
