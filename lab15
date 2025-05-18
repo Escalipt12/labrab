@@ -1,31 +1,33 @@
 #include <stdio.h>
 
-int main() {
-    int N,i;
-    printf("Vvedit num: ");
-    scanf("%d", &N);
 
-    int temp = N;
-    int digits[10];
-    int count = 0;
-
-    while (temp > 0) {
-        digits[count] = temp % 10;
-        temp /= 10;
-        count++;
+void print_forward(int n) {
+    if (n < 10) {
+        printf("%d ", n);
+        return;
     }
-
-    for ( i = count - 1; i >= 0; i--) {
-        printf("%d", digits[i]);
-        if (i > 0) printf(" ");
-    }
-    printf("\n");
-
-    for ( i = 0; i < count; i++) {
-        printf("%d", digits[i]);
-        if (i < count - 1) printf(" ");
-    }
-    printf("\n");
-
-    return 0;
+    print_forward(n / 10);
+    printf("%d ", n % 10);
 }
+
+
+void print_backward(int n) {
+    printf("%d ", n % 10);
+    if (n >= 10) {
+        print_backward(n / 10);
+    }
+}
+
+int main() {
+    int n;
+    printf("Enter number: ");
+    scanf("%d", &n);
+    
+    printf("Forward: ");
+    print_forward(n);
+    
+    printf("\nBackward: ");
+    print_backward(n);
+    
+    return 0;
+} 
