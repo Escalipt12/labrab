@@ -10,6 +10,10 @@ double ploshad(double a, double b, double c) {
     return sqrt(p * (p - a) * (p - b) * (p - c));
 }
 
+double height(double base, double area) {
+    return (2 * area) / base;
+}
+
 int main() {
     double a, b, c;
     
@@ -33,10 +37,14 @@ int main() {
         printf("Oshibka! Eto ne dlini storon\n\n");
     }
     
+    double area = ploshad(a, b, c);
 
     printf("\nRes:\n");
     printf("Perimeter: %.2f\n", perimeter(a, b, c));
-    printf("Ploshad: %.2f\n", ploshad(a, b, c));
+    printf("Ploshad: %.2f\n", area);
+    printf("Visota k storone a: %.2f\n", height(a, area));
+    printf("Visota k storone b: %.2f\n", height(b, area));
+    printf("Visota k storone c: %.2f\n", height(c, area));
     
     return 0;
 }
