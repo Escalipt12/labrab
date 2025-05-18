@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main() {
+    char stroka[256];
+    printf("Vvedite stroky: ");
+    if (fgets(stroka, sizeof(stroka), stdin) == NULL) {
+        printf("Error reading input\n");
+        return 1;
+    }
+    stroka[strcspn(stroka, "\n")] = '\0'; // Удаляем '\n'
+
+    double result = 0.0;
+    char operator = '+';
+    int pos = 0;
+
+    while (stroka[pos] != '\0') {
+        // Пропускаем пробелы
+        while (stroka[pos] == ' ') pos++;
+
+        // Проверяем, есть ли оператор
+        if (stroka[pos] == '+' || stroka[pos] == '-') {
+            operator = stroka[pos];
+            pos++;
+            while (stroka[pos] == ' ') pos++;
+        }
+
+        // Читаем число
+        double num;
+        int chars_read;
+        if (sscanf(stroka + pos, "%lf%n", &num, &chars_read) != 1) {
+            printf("Error: invalid number at position %d\n", pos);
+            return 1;
+        }
+        pos += chars_read;
+
+        // Применяем оператор
+        if (operator == '+') {
+            result += num;
+        } else {
+            result -= num;
+        }
+    }
+
+    printf("Result: %.6f\n", result);
+    return 0;
+}
