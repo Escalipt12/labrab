@@ -4,7 +4,7 @@ int main() {
     char str[81];
     
     printf("Введите строку (до 80 символов):\n");
-    scanf("%80[^\n]", str); // Ввод строки до 80 символов, кроме '\n'
+    scanf("%80[^\n]", str); 
     
     for (int i = 0; str[i] != '\0'; i++) {
         if (str[i] == 'a') str[i] = 'A';
