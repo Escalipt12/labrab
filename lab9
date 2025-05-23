@@ -1,48 +1,63 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
-int main() {
-    char stroka[256];
-    printf("Vvedite stroky: ");
-    if (fgets(stroka, sizeof(stroka), stdin) == NULL) {
-        printf("Error reading input\n");
-        return 1;
+#define MAX_INPUT 1000
+
+double calculateExpression(char *expr) {
+    // Удаляем пробелы из выражения
+    char *src = expr, *dst = expr;
+    while (*src) {
+        if (!isspace((unsigned char)*src)) {
+            *dst = *src;
+            dst++;
+        }
+        src++;
     }
-    stroka[strcspn(stroka, "\n")] = '\0'; // Удаляем '\n'
+    *dst = '\0';
 
-    double result = 0.0;
+    double result = 0;
     char operator = '+';
-    int pos = 0;
+    char *ptr = expr;
 
-    while (stroka[pos] != '\0') {
-        // Пропускаем пробелы
-        while (stroka[pos] == ' ') pos++;
+    // Обработка первого числа (возможно с унарным минусом)
+    if (*ptr == '-') {
+        operator = '-';
+        ptr++;
+    }
+    
+    result = strtod(ptr, &ptr);
+    if (operator == '-') {
+        result = -result;
+    }
 
-        // Проверяем, есть ли оператор
-        if (stroka[pos] == '+' || stroka[pos] == '-') {
-            operator = stroka[pos];
-            pos++;
-            while (stroka[pos] == ' ') pos++;
-        }
-
-        // Читаем число
-        double num;
-        int chars_read;
-        if (sscanf(stroka + pos, "%lf%n", &num, &chars_read) != 1) {
-            printf("Error: invalid number at position %d\n", pos);
-            return 1;
-        }
-        pos += chars_read;
-
-        // Применяем оператор
+    // Обработка остальных чисел
+    while (*ptr != '\0') {
+        operator = *ptr;
+        ptr++;
+        
+        double num = strtod(ptr, &ptr);
         if (operator == '+') {
             result += num;
-        } else {
+        } else if (operator == '-') {
             result -= num;
         }
     }
 
-    printf("Result: %.6f\n", result);
-    return 0;
+    return result;
 }
+
+int main() {
+    char expr[MAX_INPUT];
+    
+    printf("Enter expression (e.g. -123.5 + 4 - 456+56): ");
+    if (fgets(expr, MAX_INPUT, stdin)) {
+        expr[strcspn(expr, "\n")] = 0;
+        
+        double result = calculateExpression(expr);
+        printf("Result: %.2f\n", result);
+    }
+    
+    return 0;
+} 
