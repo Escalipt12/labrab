@@ -1,0 +1,113 @@
+#include <stdio.h>
+#include <string.h>
+#include <time.h>
+#include <stdlib.h>
+
+// Function to check if a year is leap year
+int isLeapYear(int year) {
+    return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+}
+
+// Function to get the number of days in a month
+int getDaysInMonth(int month, int year) {
+    int days[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    if (month == 2 && isLeapYear(year))
+        return 29;
+    return days[month - 1];
+}
+
+// Function to calculate the day of week (Zeller's congruence)
+int getDayOfWeek(int year, int month, int day) {
+    if (month < 3) {
+        month += 12;
+        year--;
+    }
+    int k = year % 100;
+    int j = year / 100;
+    int h = (day + ((13 * (month + 1)) / 5) + k + (k / 4) + (j / 4) - (2 * j)) % 7;
+    return (h + 5) % 7; // Convert to 0 = Monday, ..., 6 = Sunday
+}
+
+// Function to print month calendar
+void printMonthCalendar(int year, int month) {
+    const char *months[] = {
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    };
+    
+    printf("\n      %s %d\n", months[month - 1], year);
+    printf("Mo Tu We Th Fr Sa Su\n");
+
+    int daysInMonth = getDaysInMonth(month, year);
+    int startDay = getDayOfWeek(year, month, 1);
+
+    // Print leading spaces
+    for (int i = 0; i < startDay; i++) {
+        printf("   ");
+    }
+
+    // Print days
+    for (int day = 1; day <= daysInMonth; day++) {
+        printf("%2d ", day);
+        if ((startDay + day) % 7 == 0 || day == daysInMonth) {
+            printf("\n");
+        }
+    }
+    printf("\n");
+}
+
+// Function to print year calendar
+void printYearCalendar(int year) {
+    printf("\nCalendar for %d\n", year);
+    for (int month = 1; month <= 12; month++) {
+        printMonthCalendar(year, month);
+    }
+}
+
+// Function to print day of week for a specific date
+void printDayOfWeek(int year, int month, int day) {
+    const char *weekdays[] = {
+        "Monday", "Tuesday", "Wednesday", "Thursday",
+        "Friday", "Saturday", "Sunday"
+    };
+    int dayOfWeek = getDayOfWeek(year, month, day);
+    printf("%02d.%02d.%04d is %s\n", day, month, year, weekdays[dayOfWeek]);
+}
+
+int main() {
+    char input[20];
+    printf("Enter date (formats: YYYY.MM.DD, YYYY.MM, YYYY or 'now'): ");
+    scanf("%s", input);
+
+    if (strcmp(input, "now") == 0) {
+        time_t t = time(NULL);
+        struct tm *tm = localtime(&t);
+        printf("Current date: %02d.%02d.%04d\n", 
+               tm->tm_mday, tm->tm_mon + 1, tm->tm_year + 1900);
+        printDayOfWeek(tm->tm_year + 1900, tm->tm_mon + 1, tm->tm_mday);
+    } else {
+        int year, month, day;
+        int count = sscanf(input, "%d.%d.%d", &year, &month, &day);
+
+        if (count == 3) {
+            // Format: YYYY.MM.DD
+            printDayOfWeek(year, month, day);
+        } else if (count == 2) {
+            // Format: YYYY.MM
+            printMonthCalendar(year, month);
+        } else if (count == 1) {
+            // Format: YYYY
+            printYearCalendar(year);
+        } else {
+            printf("Invalid date format!\n");
+            printf("Please use one of the following formats:\n");
+            printf("YYYY.MM.DD - to get the day of week\n");
+            printf("YYYY.MM - to get the calendar for a specific month\n");
+            printf("YYYY - to get the calendar for the entire year\n");
+            printf("now - to get current date information\n");
+            return 1;
+        }
+    }
+
+    return 0;
+} 
