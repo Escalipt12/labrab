@@ -1,4 +1,4 @@
-#include <stdio.h>Add commentMore actions
+#include <stdio.h>
 #include <setjmp.h>
 
 // Global variable for storing jump context
@@ -20,7 +20,7 @@ void fibonacci(unsigned long long a, unsigned long long b, int n) {
     // Recursive call for next Fibonacci number
     fibonacci(b, a + b, n - 1);
 }
-Add commentMore actions
+
 int main() {
     int n;
     printf("Enter the number of Fibonacci numbers to sum: ");
