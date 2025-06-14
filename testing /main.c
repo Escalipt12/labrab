@@ -40,3 +40,33 @@ int main() {
 
     return 0;
 }
+2.
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+    int m;
+    int i;
+    int j;
+    printf("Enter matrix size (m): ");
+    scanf("%d", &m);
+
+    
+    srand(time(NULL));
+
+    
+    int matrix[m][m];
+    
+    
+    printf("Generated matrix:\n");
+    for (i = 0; i < m; i++) {
+        for (j = 0; j < m; j++) {
+            matrix[i][j] = rand() % 10;
+            printf("%d ", matrix[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
