@@ -94,3 +94,65 @@ int main() {
 
     return 0;
 }
+3.
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+    srand(time(NULL));
+    int size = 3; 
+    int attempts = 0;
+    int found = 0;
+    int i;
+    int j;
+    
+    while (!found) {
+        attempts++;
+        
+        
+        int mat1[size][size], sum1 = 0;
+        for (i = 0; i < size; i++) {
+            for (j = 0; j < size; j++) {
+                mat1[i][j] = rand() % 10;
+                sum1 += mat1[i][j];
+            }
+        }
+        
+        int mat2[size][size], sum2 = 0;
+        for (i = 0; i < size; i++) {
+            for (j = 0; j < size; j++) {
+                mat2[i][j] = rand() % 10;
+                sum2 += mat2[i][j];
+            }
+        }
+        
+        
+        if (sum1 == sum2) {
+            found = 1;
+            FILE *out = fopen("output.txt", "w");
+            
+            fprintf(out, "Matrix 1 (sum = %d):\n", sum1);
+            for (i = 0; i < size; i++) {
+                for (j = 0; j < size; j++) {
+                    fprintf(out, "%d ", mat1[i][j]);
+                }
+                fprintf(out, "\n");
+            }
+            
+            
+            fprintf(out, "\nMatrix 2 (sum = %d):\n", sum2);
+            for (i = 0; i < size; i++) {
+                for (j = 0; j < size; j++) {
+                    fprintf(out, "%d ", mat2[i][j]);
+                }
+                fprintf(out, "\n");
+            }
+            
+            fclose(out);
+            printf("Found matrices s pavnoi sum (%d) after %d\n", sum1, attempts);
+        }
+    }
+    
+    return 0;
+}
