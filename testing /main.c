@@ -70,3 +70,26 @@ int main() {
 
     return 0;
 }
+4. 
+#include <stdio.h>
+#include <time.h>
+
+void long_running_operation() {
+    
+    int i;
+    for (i = 0; i < 100000000; i++);
+}
+
+int main() {
+    clock_t start = clock();
+    
+    
+    long_running_operation();
+    
+    clock_t end = clock();
+    double time_taken = ((double)(end - start)) / CLOCKS_PER_SEC;
+    
+    printf("Program execution time: %.3f seconds\n", time_taken);
+    
+    return 0;
+}
